@@ -4,7 +4,7 @@ background:#000;
 font-family:Arial;
 display:flex;
 justify-content:center;
-padding:30px;
+padding:40px;
 color:white;
 }
 
@@ -31,7 +31,7 @@ border-radius:14px;
 input{
 width:100%;
 margin:5px 0;
-padding:8px;
+padding:10px;
 border-radius:10px;
 border:1px solid #39ff14;
 background:black;
@@ -40,22 +40,20 @@ color:white;
 
 button{
 width:100%;
-margin-top:5px;
-padding:8px;
+margin-top:6px;
+padding:10px;
 border-radius:10px;
 border:none;
 background:#39ff14;
-cursor:pointer;
 font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-opacity:0.8;
-}
+button:hover{opacity:0.85}
 
 .item{
 display:flex;
 justify-content:space-between;
-padding:4px;
+padding:6px;
 border-bottom:1px solid #222;
 }
