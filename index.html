@@ -2,117 +2,71 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Urban Logistics</title>
-<style>
-body{
-margin:0;
-background:#000;
-font-family:Arial;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-color:white;
-}
-
-.card{
-width:420px;
-background:#0f0f0f;
-border:1px solid #39ff14;
-border-radius:24px;
-padding:20px;
-box-shadow:0 0 20px rgba(57,255,20,0.15);
-}
-
-h1{
-color:#39ff14;
-font-size:20px;
-margin-bottom:15px;
-}
-
-.list{
-background:#111;
-padding:10px;
-border-radius:16px;
-margin-bottom:15px;
-border:1px solid rgba(57,255,20,0.2);
-}
-
-.item{
-display:flex;
-justify-content:space-between;
-padding:8px;
-margin:5px 0;
-background:#000;
-border-radius:12px;
-border:1px solid rgba(57,255,20,0.1);
-}
-
-button{
-flex:1;
-padding:10px;
-border-radius:16px;
-border:none;
-cursor:pointer;
-font-weight:bold;
-}
-
-.green{
-background:#39ff14;
-color:black;
-margin-right:8px;
-}
-
-.outline{
-background:transparent;
-border:1px solid #39ff14;
-color:#39ff14;
-}
-</style>
+<title>LOAD404 CARGO</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="card">
-<h1>Urban Logistics System</h1>
 
-<div class="list" id="list"></div>
+<h1>LOAD404 CARGO</h1>
 
-<div style="display:flex">
-<button class="green" onclick="addPkg()">Add</button>
-<button class="outline" onclick="processPkg()">Process</button>
+<div class="section">
+<h2>Intake Buffer (DLL)</h2>
+
+<input id="pkgId" placeholder="Package ID">
+<input id="dest" placeholder="Destination">
+
+<button onclick="addToBuffer()">Insert At Tail</button>
+<button onclick="removeFromBuffer()">Remove From Head</button>
+
+<div id="buffer"></div>
 </div>
+
+<div class="section">
+<h2>Dispatch Queue (FIFO)</h2>
+<button onclick="enqueue()">Enqueue</button>
+<button onclick="dequeue()">Dequeue</button>
+<div id="queue"></div>
 </div>
 
-<script>
-let queue=[
-{id:"PKG_KYS_001",dest:"Talas"},
-{id:"PKG_KYS_002",dest:"Belsin"}
-];
+<div class="section">
+<h2>Truck Stack (LIFO)</h2>
+<button onclick="pushTruck()">Push</button>
+<button onclick="popTruck()">Pop</button>
+<div id="stack"></div>
+</div>
 
-function render(){
-let list=document.getElementById("list");
-list.innerHTML="";
-queue.forEach(p=>{
-let div=document.createElement("div");
-div.className="item";
-div.innerHTML=`<span>${p.id}</span><span style="color:#39ff14">${p.dest}</span>`;
-list.appendChild(div);
-});
-}
+<div class="section">
+<h2>City Routing (Graph)</h2>
 
-function addPkg(){
-queue.push({id:"PKG_NEW_"+Math.floor(Math.random()*1000),dest:"Meydan"});
-render();
-}
+<input id="start" placeholder="Start">
+<input id="end" placeholder="End">
 
-function processPkg(){
-queue.shift();
-render();
-}
+<button onclick="shortestPath()">Dijkstra</button>
+<button onclick="mst()">MST</button>
 
-render();
-</script>
+<div id="graphOut"></div>
+</div>
 
+<div class="section">
+<h2>AVL Search (Database)</h2>
+
+<input id="searchKey" placeholder="Neighborhood">
+<button onclick="searchAVL()">Search</button>
+
+<div id="avlOut"></div>
+</div>
+
+<div class="section">
+<h2>Master Registry (SLL Log)</h2>
+<button onclick="loadLog()">Refresh Log</button>
+<div id="log"></div>
+</div>
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
