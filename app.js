@@ -1,4 +1,4 @@
-const API="https://YOUR-RENDER-URL.onrender.com";
+const API="https://mmat-semester-project.onrender.com";
 
 async function load(){
 let res=await fetch(API+"/packages");
