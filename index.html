@@ -13,56 +13,33 @@
 <h1>LOAD404 CARGO</h1>
 
 <div class="section">
-<h2>Intake Buffer (DLL)</h2>
+<h2>Shipment Control</h2>
 
-<input id="pkgId" placeholder="Package ID">
-<input id="dest" placeholder="Destination">
+<input id="shipId" placeholder="Shipment ID">
+<input id="address" placeholder="Delivery Address">
 
-<button onclick="addToBuffer()">Insert At Tail</button>
-<button onclick="removeFromBuffer()">Remove From Head</button>
+<button onclick="addShipment()">Register Shipment</button>
+<button onclick="deleteShipment()">Delete Shipment</button>
+<button onclick="printAll()">Print All Shipments</button>
 
-<div id="buffer"></div>
+<div id="shipments"></div>
 </div>
 
 <div class="section">
-<h2>Dispatch Queue (FIFO)</h2>
-<button onclick="enqueue()">Enqueue</button>
-<button onclick="dequeue()">Dequeue</button>
-<div id="queue"></div>
+<h2>Address System</h2>
+
+<input id="search" placeholder="Search address / neighborhood">
+<button onclick="searchAddress()">Search</button>
+
+<div id="searchOut"></div>
 </div>
 
 <div class="section">
-<h2>Truck Stack (LIFO)</h2>
-<button onclick="pushTruck()">Push</button>
-<button onclick="popTruck()">Pop</button>
-<div id="stack"></div>
-</div>
+<h2>Optimal Distribution Route</h2>
 
-<div class="section">
-<h2>City Routing (Graph)</h2>
+<button onclick="buildRoute()">Build Optimal Route</button>
 
-<input id="start" placeholder="Start">
-<input id="end" placeholder="End">
-
-<button onclick="shortestPath()">Dijkstra</button>
-<button onclick="mst()">MST</button>
-
-<div id="graphOut"></div>
-</div>
-
-<div class="section">
-<h2>AVL Search (Database)</h2>
-
-<input id="searchKey" placeholder="Neighborhood">
-<button onclick="searchAVL()">Search</button>
-
-<div id="avlOut"></div>
-</div>
-
-<div class="section">
-<h2>Master Registry (SLL Log)</h2>
-<button onclick="loadLog()">Refresh Log</button>
-<div id="log"></div>
+<div id="routeOut"></div>
 </div>
 
 </div>
