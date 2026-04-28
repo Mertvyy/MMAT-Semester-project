@@ -1,3 +1,5 @@
+InputStream is=getClass().getClassLoader().getResourceAsStream("mapData.txt");
+BufferedReader br=new BufferedReader(new InputStreamReader(is));
 import java.util.*;
 class Edge{String v;int w;Edge(String v,int w){this.v=v;this.w=w;}}
 public class Graph{
