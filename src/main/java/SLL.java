@@ -1,3 +1,4 @@
+package com.load404.cargo;
 class SLLNode {
     Package data;
     SLLNode next;
