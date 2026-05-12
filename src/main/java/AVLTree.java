@@ -1,4 +1,5 @@
-/**
+
+package com.load404.cargo;/**
  * AVL Node Class: Represents a single node in the Address Directory.
  */
 class AVLNode {
