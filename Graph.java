@@ -35,7 +35,10 @@ public class Graph {
         g.get(s).add(new Edge(d, w));
         g.get(d).add(new Edge(s, w));
     }
-
+    
+public String getMSTText(){
+    return "Optimal route generated";
+}
     /**
      * Dijkstra's Algorithm: Calculates the shortest paths from the starting point 
      * (Warehouse/Meydan) to all other neighborhoods.
