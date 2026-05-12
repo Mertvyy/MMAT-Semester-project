@@ -13,6 +13,10 @@ public class Package {
      * * @param id The unique package ID.
      * @param dest The destination neighborhood.
      */
+
+
+public Package(){}
+    
     public Package(String id, String dest) {
         this.id = id;
         this.destination = dest;
