@@ -112,24 +112,17 @@ public class AVLTree {
      * Public wrapper method to insert a new address record into the tree.
      */
     public void insert(String k, String v) {
-        root = insert(root, k, v);
+        root = insert(root, k.toLowerCase(), v);
     }
 
-    /**
-     * Recursive Search Method.
-     * Time Complexity: O(log N)
-     * Explanation: Quickly navigates left or right based on alphabetical order of the keys.
-     */
     public AVLNode search(AVLNode n, String k) {
         if (n == null || n.key.equals(k)) return n;
         return k.compareTo(n.key) < 0 ? search(n.l, k) : search(n.r, k);
     }
 
-    /**
-     * Public wrapper method to search for a specific neighborhood and return its corresponding data.
-     */
     public String search(String k) {
-        AVLNode n = search(root, k);
+        if (k == null) return null;
+        AVLNode n = search(root, k.toLowerCase());
         return n == null ? null : n.val;
     }
 }

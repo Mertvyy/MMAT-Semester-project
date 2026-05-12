@@ -21,16 +21,16 @@ public class Graph {
     Map<String, List<Edge>> g = new HashMap<>();
 
     public void addEdge(String s, String d, int w) {
+        s = s.toLowerCase();
+        d = d.toLowerCase();
         g.putIfAbsent(s, new ArrayList<>());
         g.putIfAbsent(d, new ArrayList<>());
         g.get(s).add(new Edge(d, w));
         g.get(d).add(new Edge(s, w));
     }
     
-    /**
-     * Dijkstra's Algorithm: Returns the shortest paths as a formatted string.
-     */
     public String dijkstra(String start) {
+        start = start.toLowerCase();
         if (!g.containsKey(start)) return "Start point not found";
         
         Map<String, Integer> dist = new HashMap<>();

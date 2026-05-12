@@ -118,12 +118,12 @@ async function searchAddress() {
     const q = document.getElementById("search-query").value;
     if (!q) return;
     try {
-        const res = await fetch(API + "/address/search?key=" + q);
+        const res = await fetch(API + "/address/search?key=" + q.toLowerCase());
         const text = await res.text();
         document.getElementById("search-output").innerText = text;
-        showToast("Search completed successfully", "success");
+        showToast("SEARCH COMPLETED: " + q.toUpperCase(), "success");
     } catch (e) {
-        showToast("Search failed", "failed");
+        showToast("SEARCH FAILED", "failed");
     }
 }
 
