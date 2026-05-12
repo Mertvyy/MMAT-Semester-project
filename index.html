@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAD404 CARGO | Urban Logistics & Distribution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <header>
+        <div class="logo">
+            <span class="accent">LOAD</span>404 <span class="brand-tag">LOGISTICS</span>
+        </div>
+        <nav>
+            <div class="status-indicator">
+                <div class="pulse"></div>
+                SYSTEM ACTIVE
+            </div>
+        </nav>
+    </header>
+
+    <div id="toast-container"></div>
+
+    <main>
+        <div class="grid-container">
+            <!-- Registration Panel -->
+            <section class="panel glass">
+                <div class="panel-header">
+                    <h2>Intake System</h2>
+                    <span class="subtext">Register incoming cargo to DLL Buffer</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="shipId" placeholder="PKG_ID (e.g. PKG_001)">
+                    <input type="text" id="address" placeholder="Destination Neighborhood">
+                    <button class="btn-primary" onclick="addShipment()">
+                        <span>Register Shipment</span>
+                    </button>
+                </div>
+                <div class="log-container" id="buffer-log">
+                    <div class="placeholder">Intake Buffer is empty...</div>
+                </div>
+            </section>
+
+            <!-- Warehouse Pipeline -->
+            <section class="panel glass">
+                <div class="panel-header">
+                    <h2>Warehouse Pipeline</h2>
+                    <span class="subtext">Process cargo: Buffer → Queue → Stack → Log</span>
+                </div>
+                <div class="pipeline-actions">
+                    <button class="btn-step" onclick="step1()">
+                        <div class="step-num">01</div>
+                        <div class="step-text">To Sorting (FIFO)</div>
+                    </button>
+                    <button class="btn-step" onclick="step2()">
+                        <div class="step-num">02</div>
+                        <div class="step-text">To Truck (LIFO)</div>
+                    </button>
+                    <button class="btn-step" onclick="step3()">
+                        <div class="step-num">03</div>
+                        <div class="step-text">Dispatch & Audit</div>
+                    </button>
+                </div>
+                <div class="pipeline-status" id="pipeline-output">
+                    Waiting for instructions...
+                </div>
+            </section>
+
+            <!-- Routing & Map -->
+            <section class="panel glass">
+                <div class="panel-header">
+                    <h2>City Routing (Graph)</h2>
+                    <span class="subtext">Kayseri Optimization Algorithms</span>
+                </div>
+                <div class="button-row">
+                    <button class="btn-secondary" onclick="getShortestPath()">Shortest Path (Dijkstra)</button>
+                    <button class="btn-secondary" onclick="getMST()">Network MST (Prim)</button>
+                </div>
+                <div class="code-output" id="route-output">
+                    <pre>Route analysis will appear here...</pre>
+                </div>
+            </section>
+
+            <!-- Audit Log -->
+            <section class="panel glass">
+                <div class="panel-header">
+                    <h2>Master Registry (SLL)</h2>
+                    <span class="subtext">Immutable Daily Audit Log</span>
+                </div>
+                <div class="audit-list" id="audit-log">
+                    <div class="placeholder">Audit log is currently empty...</div>
+                </div>
+            </section>
+
+            <!-- Address Directory -->
+            <section class="panel glass full-width">
+                <div class="panel-header">
+                    <h2>Address Directory (AVL Tree)</h2>
+                    <span class="subtext">Fast O(log N) Neighborhood Lookup</span>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="search-query" placeholder="Enter neighborhood name...">
+                    <button class="btn-accent" onclick="searchAddress()">Search Directory</button>
+                </div>
+                <div class="search-result" id="search-output">
+                    Awaiting query...
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

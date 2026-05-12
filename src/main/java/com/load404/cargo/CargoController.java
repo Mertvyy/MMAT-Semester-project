@@ -5,7 +5,6 @@ import java.util.*;
 import java.io.*;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin("*")
 public class CargoController {
 
