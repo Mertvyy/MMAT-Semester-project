@@ -114,6 +114,18 @@ async function step3() {
     }
 }
 
+async function processAll() {
+    showToast("STARTING AUTO-PROCESS...", "success");
+    try {
+        const res = await fetch(API + "/warehouse/process-all", { method: "POST" });
+        const msg = await res.text();
+        showToast(msg, res.ok ? "success" : "failed");
+        refreshAll();
+    } catch (e) {
+        showToast("Process All failed", "failed");
+    }
+}
+
 async function searchAddress() {
     const q = document.getElementById("search-query").value;
     if (!q) return;

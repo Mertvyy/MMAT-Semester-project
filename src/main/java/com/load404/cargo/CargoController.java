@@ -66,9 +66,24 @@ public class CargoController {
     @PostMapping("/warehouse/step3-to-log")
     public String dispatch() {
         Package p = truckStack.pop();
-        if (p == null) return "Truck is empty";
+        if (p == null) return "FAILED: Truck is empty";
         log.addRecord(p);
-        return "Dispatched " + p.id + ". Record added to Master Registry (SLL)";
+        return "SUCCESS: Dispatched " + p.id + ". Record added to SLL Ledger.";
+    }
+
+    @PostMapping("/warehouse/process-all")
+    public String processAll() {
+        int count = 0;
+        Package p;
+        while ((p = buffer.removeFromHead()) != null) {
+            sortingQueue.enqueue(p);
+            Package p2 = sortingQueue.dequeue();
+            truckStack.push(p2);
+            Package p3 = truckStack.pop();
+            log.addRecord(p3);
+            count++;
+        }
+        return "SUCCESS: Processed " + count + " assets through the full pipeline.";
     }
 
     @GetMapping("/warehouse/log")
