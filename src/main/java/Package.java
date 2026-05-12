@@ -1,3 +1,4 @@
+package com.load404.cargo;
 /**
  * Cargo Package Model
  * Represents a single delivery item in the logistics system.
