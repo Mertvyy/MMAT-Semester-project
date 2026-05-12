@@ -2,28 +2,40 @@ package com.load404.cargo;
 import java.io.*;
 import java.util.*;
 
-/**
- * File Management System
- * Handles the reading and parsing of system configuration files.
- */
 public class FileManager {
 
-    private static BufferedReader getReader(String f) throws Exception {
+    public static void ensureFileExists(String f) {
         File file = new File(f);
-        if (file.exists()) {
-            return new BufferedReader(new FileReader(file));
-        } else {
-            InputStream is = FileManager.class.getClassLoader().getResourceAsStream(f);
-            if (is == null) throw new FileNotFoundException("File not found: " + f);
-            return new BufferedReader(new InputStreamReader(is));
+        if (!file.exists()) {
+            System.out.println("File " + f + " missing. Extracting from resources...");
+            try (InputStream is = FileManager.class.getClassLoader().getResourceAsStream(f);
+                 OutputStream os = new FileOutputStream(file)) {
+                if (is != null) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = is.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                    System.out.println("Extracted " + f + " to " + file.getAbsolutePath());
+                } else {
+                    file.createNewFile();
+                    System.out.println("Created empty " + f);
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to ensure file " + f + ": " + e.getMessage());
+            }
         }
+    }
+
+    private static BufferedReader getReader(String f) throws Exception {
+        ensureFileExists(f);
+        return new BufferedReader(new FileReader(f));
     }
 
     public static List<Package> readPackages(String f) throws Exception {
         List<Package> l = new ArrayList<>();
         BufferedReader br = getReader(f);
         String s;
-        
         while ((s = br.readLine()) != null) {
             if (s.startsWith("#") || s.trim().isEmpty()) continue;
             String[] p = s.trim().split("\\s+"); 
@@ -39,7 +51,6 @@ public class FileManager {
         Graph g = new Graph();
         BufferedReader br = getReader(f);
         String s;
-        
         while ((s = br.readLine()) != null) {
             if (s.startsWith("#") || s.trim().isEmpty()) continue;
             String[] p = s.trim().split("\\s+");

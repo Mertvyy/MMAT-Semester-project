@@ -15,24 +15,38 @@ public class CargoController {
     private QueueDS sortingQueue = new QueueDS();
     private StackDS truckStack = new StackDS();
 
-    public CargoController() throws Exception {
+    public CargoController() {
         loadData();
+    }
+
+    @GetMapping("/system/health")
+    public Map<String, Object> health() {
+        Map<String, Object> h = new HashMap<>();
+        h.put("status", "ACTIVE");
+        h.put("buffer_size", getBuffer().size());
+        h.put("log_size", getLog().size());
+        h.put("packageData_path", new File("packageData.txt").getAbsolutePath());
+        h.put("packageData_exists", new File("packageData.txt").exists());
+        h.put("mapData_exists", new File("mapData.txt").exists());
+        return h;
     }
 
     private void loadData() {
         try {
-            File pFile = new File("packageData.txt");
-            System.out.println("System Path: " + pFile.getAbsolutePath());
+            FileManager.ensureFileExists("packageData.txt");
+            FileManager.ensureFileExists("mapData.txt");
             
             List<Package> pkgs = FileManager.readPackages("packageData.txt");
             for (Package p : pkgs) {
-                buffer.insertAtTail(p);
-                avl.insert(p.destination, p.id);
+                if (p.id != null) {
+                    buffer.insertAtTail(p);
+                    avl.insert(p.destination, p.id);
+                }
             }
             graph = FileManager.readMap("mapData.txt");
-            System.out.println("LOGISTICS DATA LOADED: " + pkgs.size() + " ASSETS FOUND.");
+            System.out.println("LOGISTICS DATA BOOTSTRAPPED: " + pkgs.size() + " ITEMS.");
         } catch (Exception e) {
-            System.err.println("BOOT ERROR: " + e.getMessage());
+            System.err.println("BOOTSTRAP FAILED: " + e.getMessage());
         }
     }
 
