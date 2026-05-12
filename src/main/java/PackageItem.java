@@ -1,3 +1,4 @@
+package com.load404.cargo;
 public class PackageItem{
     public String id;
     public String destination;
