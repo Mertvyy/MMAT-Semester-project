@@ -21,16 +21,18 @@ public class CargoController {
 
     private void loadData() {
         try {
+            File pFile = new File("packageData.txt");
+            System.out.println("System Path: " + pFile.getAbsolutePath());
+            
             List<Package> pkgs = FileManager.readPackages("packageData.txt");
             for (Package p : pkgs) {
                 buffer.insertAtTail(p);
                 avl.insert(p.destination, p.id);
             }
             graph = FileManager.readMap("mapData.txt");
-            System.out.println("Data loaded successfully.");
+            System.out.println("LOGISTICS DATA LOADED: " + pkgs.size() + " ASSETS FOUND.");
         } catch (Exception e) {
-            System.err.println("Critical Error loading initial data: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("BOOT ERROR: " + e.getMessage());
         }
     }
 
@@ -82,20 +84,20 @@ public class CargoController {
 
     @PostMapping("/shipment/add")
     public String add(@RequestBody Package p) {
-        if (p.id == null || p.destination == null) return "Invalid data";
+        if (p.id == null || p.destination == null) return "FAILED: Invalid Data";
         
         buffer.insertAtTail(p);
         avl.insert(p.destination, p.id);
         
-        // Persist to file
-        try (FileWriter fw = new FileWriter("packageData.txt", true)) {
-            fw.write("\n" + p.id + " " + p.destination);
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("packageData.txt", true)))) {
+            out.println();
+            out.print(p.id + " " + p.destination);
         } catch (IOException e) {
-            System.err.println("Failed to write to file: " + e.getMessage());
-            return "Added to memory, but file write failed";
+            System.err.println("Write Error: " + e.getMessage());
+            return "SUCCESS: Cached in Memory (File Write Failed)";
         }
         
-        return "Package " + p.id + " registered in intake buffer and saved to file";
+        return "SUCCESS: Asset " + p.id + " Onboarded to Terminal";
     }
 
     @GetMapping("/address/search")
