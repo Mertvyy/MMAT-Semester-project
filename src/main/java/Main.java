@@ -1,4 +1,5 @@
-import java.util.*;
+package com.load404.cargo;
+    import java.util.*;
 
 /**
  * Project: Urban Logistics & Distribution System
