@@ -2,6 +2,7 @@ package com.load404.cargo;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import java.io.*;
 
 @RestController
 @RequestMapping("/api")
@@ -19,7 +20,7 @@ public class CargoController {
         loadData();
     }
 
-    private void loadData() throws Exception {
+    private void loadData() {
         try {
             List<Package> pkgs = FileManager.readPackages("packageData.txt");
             for (Package p : pkgs) {
@@ -27,8 +28,10 @@ public class CargoController {
                 avl.insert(p.destination, p.id);
             }
             graph = FileManager.readMap("mapData.txt");
+            System.out.println("Data loaded successfully.");
         } catch (Exception e) {
-            System.err.println("Error loading initial data: " + e.getMessage());
+            System.err.println("Critical Error loading initial data: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -80,9 +83,20 @@ public class CargoController {
 
     @PostMapping("/shipment/add")
     public String add(@RequestBody Package p) {
+        if (p.id == null || p.destination == null) return "Invalid data";
+        
         buffer.insertAtTail(p);
         avl.insert(p.destination, p.id);
-        return "Package " + p.id + " registered in intake buffer";
+        
+        // Persist to file
+        try (FileWriter fw = new FileWriter("packageData.txt", true)) {
+            fw.write("\n" + p.id + " " + p.destination);
+        } catch (IOException e) {
+            System.err.println("Failed to write to file: " + e.getMessage());
+            return "Added to memory, but file write failed";
+        }
+        
+        return "Package " + p.id + " registered in intake buffer and saved to file";
     }
 
     @GetMapping("/address/search")
