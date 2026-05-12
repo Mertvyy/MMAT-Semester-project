@@ -34,4 +34,30 @@ public class DLL {
         else tail = null;
         return d;
     }
+
+public void removePackage(Package p) {
+
+    DLLNode t = head;
+
+    while (t != null) {
+
+        if (t.data.id.equals(p.id)) {
+
+            if (t.prev != null)
+                t.prev.next = t.next;
+            else
+                head = t.next;
+
+            if (t.next != null)
+                t.next.prev = t.prev;
+            else
+                tail = t.prev;
+
+            return;
+        }
+
+        t = t.next;
+    }
+}
+    
 }
