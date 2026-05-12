@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * Project: Urban Logistics & Distribution System
- * Company: LOAD404 CARGO (GökErk Logistics)
+ * Company: LOAD404 CARGO
  *
  * Main Execution Class
  * Orchestrates the entire logistics pipeline: reading files, processing packages 
