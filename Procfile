@@ -1,1 +1,1 @@
-web: java -jar target/cargo-1.5.jar
+web: java -jar target/cargo-1.6.jar

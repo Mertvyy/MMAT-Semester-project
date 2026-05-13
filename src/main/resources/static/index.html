@@ -3,88 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOAD404 CARGO | Operations Command</title>
+    <title>V1.6 | LOAD404 CARGO OPERATIONS</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=1.4">
+    <link rel="stylesheet" href="style.css?v=1.6">
 </head>
-<body style="background:#000;">
-    <div id="ver-tag" style="position:fixed; bottom:10px; left:10px; color:#8ACE00; font-family:monospace; font-size:10px; z-index:9999;">SYSTEM_VER: 1.4_ACTION_FIX</div>
+<body style="background:#000; color:#fff; font-family:'Outfit', sans-serif;">
+    <div id="ver-tag" style="position:fixed; top:5px; left:5px; color:#8ACE00; font-family:monospace; font-size:9px; z-index:10000; background:#000; padding:2px;">VER: 1.6_GLOBAL_LIST</div>
     
-    <header style="border-bottom: 5px solid #8ACE00; background:#000; padding: 2rem 5%; display:flex; justify-content:space-between; align-items:center;">
-        <div class="logo" style="font-size:2.5rem; font-weight:900; color:#8ACE00;">LOAD<span>404</span> CARGO</div>
-        <div class="subtext" style="color:#8ACE00; font-family:monospace;">[STATE: ACTIVE] [ZONE: KAYSERI_HUB]</div>
+    <header style="border-bottom: 5px solid #8ACE00; background:#000; padding: 1.5rem 5%; display:flex; justify-content:space-between; align-items:center;">
+        <div class="logo" style="font-size:2.5rem; font-weight:900; color:#8ACE00;">LOAD<span style="color:#FF69B4;">404</span> CARGO</div>
+        <div id="system-health" style="font-family:monospace; font-size:12px; color:#8ACE00;">
+            SYS_STATUS: <b id="health-status" style="color:#FF69B4;">CONNECTING...</b> | 
+            DB: <b id="health-file" style="color:#FF69B4;">UNKNOWN</b>
+        </div>
     </header>
 
-    <div id="system-health" style="background:#111; border-bottom:1px solid #333; padding:5px 5%; font-size:10px; color:#8ACE00; display:flex; gap:20px;">
-        <span>STATUS: <b id="health-status">CHECKING...</b></span>
-        <span>BUFFER: <b id="health-buffer">0</b></span>
-        <span>DATABASE: <b id="health-file">UNKNOWN</b></span>
-    </div>
-
-    <div id="toast-container"></div>
+    <div id="toast-container" style="position:fixed; bottom:20px; right:20px; z-index:10000; display:flex; flex-direction:column; gap:10px;"></div>
     
     <main style="padding: 2rem 5%;">
-        <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:2rem;">
-            <!-- Registration -->
-            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:2rem; position:relative;">
+        <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+            
+            <!-- Global Parcel List (NEW) -->
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #8ACE00; padding:1.5rem; grid-row: span 2;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:10px;">Global Arrival Terminal</h2>
-                    <span class="subtext" style="color:#8ACE00; font-family:monospace; font-size:0.8rem;">ONBOARD ASSETS [DLL_BUFFER]</span>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Global Master Inventory</h2>
+                    <span style="color:#8ACE00; font-family:monospace; font-size:0.7rem;">ALL PARCELS IN SYSTEM (READ FROM FILE)</span>
                 </div>
-                <input type="text" id="shipId" placeholder="ASSET_ID" style="width:100%; background:#111; border:1px solid #333; padding:1rem; color:#fff; margin-bottom:1rem;">
-                <input type="text" id="address" placeholder="DESTINATION_ZONE" style="width:100%; background:#111; border:1px solid #333; padding:1rem; color:#fff; margin-bottom:1rem;">
-                <button class="btn-primary" onclick="addShipment()" style="width:100%; background:#8ACE00; color:#000; padding:1rem; font-weight:900; border:none; cursor:pointer; text-transform:uppercase;">Onboard Asset</button>
-                <div class="log-container" id="buffer-log" style="margin-top:1rem; max-height:150px; overflow-y:auto; border:1px solid #222; background:#000;"></div>
+                <div id="global-parcel-list" style="margin-top:1rem; height:450px; overflow-y:scroll; border:1px solid #333; background:#000; padding:5px;">
+                    <div style="color:#333; text-align:center; margin-top:20px;">Scanning database...</div>
+                </div>
+            </section>
+
+            <!-- Registration -->
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
+                <div class="panel-header">
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Onboard New Asset</h2>
+                </div>
+                <input type="text" id="shipId" placeholder="PARCEL_ID" style="width:100%; background:#111; border:1px solid #333; padding:0.8rem; color:#fff; margin-bottom:0.5rem;">
+                <input type="text" id="address" placeholder="DESTINATION" style="width:100%; background:#111; border:1px solid #333; padding:0.8rem; color:#fff; margin-bottom:0.5rem;">
+                <button onclick="addShipment()" style="width:100%; background:#8ACE00; color:#000; padding:0.8rem; font-weight:900; border:none; cursor:pointer;">REGISTER PARCEL</button>
             </section>
 
             <!-- Pipeline -->
-            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:2rem;">
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:10px;">Sorting Facility</h2>
-                    <span class="subtext" style="color:#8ACE00; font-family:monospace; font-size:0.8rem;">PIPELINE: BUFFER -> QUEUE -> STACK</span>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Sorting Pipeline</h2>
                 </div>
-                <button class="btn-step" onclick="step1()" style="width:100%; background:#222; color:#8ACE00; border:1px solid #333; padding:0.8rem; margin-bottom:5px; cursor:pointer; font-weight:700;">STEP 1: TO SORTING (FIFO)</button>
-                <button class="btn-step" onclick="step2()" style="width:100%; background:#222; color:#8ACE00; border:1px solid #333; padding:0.8rem; margin-bottom:5px; cursor:pointer; font-weight:700;">STEP 2: TO TRUCK (LIFO)</button>
-                <button class="btn-step" onclick="step3()" style="width:100%; background:#222; color:#8ACE00; border:1px solid #333; padding:0.8rem; margin-bottom:5px; cursor:pointer; font-weight:700;">STEP 3: DISPATCH & AUDIT</button>
-                <button class="btn-primary" onclick="processAll()" style="width:100%; background:#FF69B4; color:#000; padding:1rem; font-weight:900; border:none; cursor:pointer; text-transform:uppercase; margin-top:10px;">AUTO-PROCESS ALL ASSETS</button>
-                <div id="pipeline-output" style="background:#000; color:#8ACE00; padding:1rem; margin-top:1rem; border-left:4px solid #8ACE00; font-family:monospace; font-size:0.8rem;">AWAITING COMMAND...</div>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <button onclick="step1()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">1. TO QUEUE (FIFO)</button>
+                    <button onclick="step2()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">2. TO STACK (LIFO)</button>
+                    <button onclick="step3()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">3. DISPATCH</button>
+                    <button onclick="processAll()" style="background:#FF69B4; color:#000; border:none; padding:0.8rem; cursor:pointer; font-weight:900; margin-top:5px;">AUTO-SORT ALL</button>
+                </div>
+                <div id="pipeline-output" style="background:#000; color:#8ACE00; padding:0.5rem; margin-top:1rem; border-left:3px solid #8ACE00; font-family:monospace; font-size:0.7rem;">READY</div>
             </section>
 
             <!-- Routing -->
-            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:2rem;">
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:10px;">Metro Optimization</h2>
-                    <span class="subtext" style="color:#8ACE00; font-family:monospace; font-size:0.8rem;">GRAPH ALGORITHMS</span>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Metro Routing</h2>
                 </div>
-                <button onclick="getShortestPath()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.8rem; margin-bottom:5px; cursor:pointer; font-weight:700;">CALC FASTEST ROUTE</button>
-                <button onclick="getMST()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.8rem; margin-bottom:5px; cursor:pointer; font-weight:700;">OPTIMIZE INFRASTRUCTURE</button>
-                <div class="code-output" id="route-output" style="background:#000; color:#8ACE00; padding:1rem; border:1px solid #8ACE00; margin-top:1rem; font-family:monospace; font-size:0.7rem; white-space:pre-wrap;"></div>
+                <button onclick="getShortestPath()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.6rem; margin-bottom:5px; cursor:pointer;">SHORTEST PATH</button>
+                <button onclick="getMST()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.6rem; cursor:pointer;">MST OPTIMIZATION</button>
+                <div class="code-output" id="route-output" style="background:#000; color:#8ACE00; padding:0.5rem; border:1px solid #8ACE00; margin-top:1rem; font-family:monospace; font-size:0.6rem; white-space:pre-wrap;"></div>
             </section>
 
-            <!-- Audit Log -->
-            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:2rem;">
-                <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:10px;">Operations Ledger</h2>
-                    <span class="subtext" style="color:#8ACE00; font-family:monospace; font-size:0.8rem;">MASTER REGISTRY [SLL]</span>
-                </div>
-                <div class="audit-list" id="audit-log" style="max-height:200px; overflow-y:auto; background:#000; border:1px solid #222;"></div>
+            <!-- Buffer List -->
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Intake Buffer (DLL)</h2>
+                <div class="log-container" id="buffer-log" style="margin-top:0.5rem; max-height:150px; overflow-y:auto; background:#000;"></div>
+            </section>
+
+            <!-- Operations Ledger -->
+            <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Dispatch Ledger (SLL)</h2>
+                <div class="audit-list" id="audit-log" style="margin-top:0.5rem; max-height:150px; overflow-y:auto; background:#000;"></div>
             </section>
 
             <!-- Directory -->
-            <section class="panel full-width" style="grid-column: 1 / -1; background:#0a0a0a; border: 2px solid #333; padding:2rem;">
-                <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:10px;">Geospatial Index</h2>
-                    <span class="subtext" style="color:#8ACE00; font-family:monospace; font-size:0.8rem;">AVL TREE SEARCH</span>
-                </div>
+            <section class="panel full-width" style="grid-column: 1 / -1; background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Search Index (AVL)</h2>
                 <div style="display:flex; gap:10px;">
-                    <input type="text" id="search-query" placeholder="ZONE_NAME" style="flex:1; background:#111; border:1px solid #333; padding:1rem; color:#fff;">
-                    <button onclick="searchAddress()" style="width:200px; background:#8ACE00; color:#000; border:none; font-weight:900; cursor:pointer;">SEARCH INDEX</button>
+                    <input type="text" id="search-query" placeholder="ZONE" style="flex:1; background:#111; border:1px solid #333; padding:0.8rem; color:#fff;">
+                    <button onclick="searchAddress()" style="width:150px; background:#8ACE00; color:#000; border:none; font-weight:900; cursor:pointer;">SEARCH</button>
                 </div>
-                <div id="search-output" style="margin-top:1rem; color:#8ACE00; font-family:monospace; font-size:1.2rem; font-weight:700;"></div>
+                <div id="search-output" style="margin-top:1rem; color:#8ACE00; font-family:monospace; font-weight:700;"></div>
             </section>
         </div>
     </main>
 
-    <script src="app.js?v=1.4"></script>
+    <script src="app.js?v=1.6"></script>
 </body>
 </html>

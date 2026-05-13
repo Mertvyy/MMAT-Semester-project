@@ -13,9 +13,27 @@ async function refreshAll() {
     try {
         await fetchBuffer();
         await fetchLog();
+        await fetchGlobalList();
         await checkHealth();
     } catch (e) {
         console.error("Refresh failed", e);
+    }
+}
+
+async function fetchGlobalList() {
+    try {
+        const res = await fetch(API + "/shipment/all");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const container = document.getElementById("global-parcel-list");
+        container.innerHTML = data.map(p => `
+            <div class="item-card" style="border-bottom:1px solid #111; padding:10px;">
+                <span style="color:#8ACE00; font-weight:900;">${p.id}</span>
+                <span style="color:#FF69B4;">${p.destination}</span>
+            </div>
+        `).join('');
+    } catch (e) {
+        document.getElementById("global-parcel-list").innerHTML = "Failed to load master data.";
     }
 }
 

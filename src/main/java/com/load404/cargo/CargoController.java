@@ -135,6 +135,15 @@ public class CargoController {
         return (res == null) ? "No shipment found for " + key : "Last Shipment to " + key + ": " + res;
     }
 
+    @GetMapping("/shipment/all")
+    public List<Package> getAll() {
+        try {
+            return FileManager.readPackages("packageData.txt");
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     @GetMapping("/route/shortest")
     public String shortestPath(@RequestParam String start) {
         return graph.dijkstra(start);
