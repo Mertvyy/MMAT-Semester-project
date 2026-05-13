@@ -1,11 +1,10 @@
-## Critical Deployment Instructions for Render:
+## Critical Deployment Instructions for Render (DOCKER):
 
-**ERROR 127 FIX**: If you see "Exited with status 127", it means you have not selected the **Java Runtime**.
+Since Java is not showing in your list, we will use **Docker**.
 
-1.  **Environment**: Go to Render Dashboard -> Settings -> **Runtime**.
-2.  **Change to**: **Java** (NOT Static Site).
-3.  **Build Command**: `mvn clean install`
-4.  **Start Command**: `java -jar target/cargo-1.7.jar`
+1.  **New Web Service**: Connect your GitHub.
+2.  **Runtime**: Select **Docker**.
+3.  **Everything Else**: Keep as default. Docker will automatically use the `Dockerfile` I just added to build and run your Java app.
 4.  **Environment Variables**: 
     - `PORT` = `8080` (Render usually sets this automatically)
 
