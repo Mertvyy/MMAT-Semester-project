@@ -1,11 +1,11 @@
 # Build Stage
-FROM maven:3.8.4-openjdk-17-slim AS build
+FROM maven:3.9.5-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean install -DskipTests
 
 # Run Stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=build /app/target/cargo-1.7.jar app.jar
 COPY packageData.txt packageData.txt
