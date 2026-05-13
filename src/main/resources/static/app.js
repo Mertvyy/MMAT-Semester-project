@@ -39,14 +39,20 @@ async function fetchGlobalList() {
 
 async function checkHealth() {
     try {
+        const aliveRes = await fetch("/alive");
+        if (!aliveRes.ok) throw new Error("Backend Offline");
+        
         const res = await fetch(API + "/system/health");
         const data = await res.json();
-        document.getElementById("health-status").innerText = data.status;
+        document.getElementById("health-status").innerText = "CONNECTED";
+        document.getElementById("health-status").style.color = "#8ACE00";
         document.getElementById("health-buffer").innerText = data.buffer_size;
         document.getElementById("health-file").innerText = data.packageData_exists ? "LOADED" : "ERROR";
         document.getElementById("health-file").style.color = data.packageData_exists ? "#8ACE00" : "#FF69B4";
     } catch (e) {
-        document.getElementById("health-status").innerText = "OFFLINE";
+        document.getElementById("health-status").innerText = "JAVA BACKEND OFFLINE - CHECK RENDER SETTINGS";
+        document.getElementById("health-status").style.color = "#FF69B4";
+        showToast("CRITICAL: JAVA BACKEND NOT RESPONDING", "failed");
     }
 }
 
