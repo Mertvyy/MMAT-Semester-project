@@ -26,8 +26,8 @@
             <!-- Global Parcel List (NEW) -->
             <section class="panel" style="background:#0a0a0a; border: 2px solid #8ACE00; padding:1.5rem; grid-row: span 2;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Global Master Inventory</h2>
-                    <span style="color:#8ACE00; font-family:monospace; font-size:0.7rem;">ALL PARCELS IN SYSTEM (READ FROM FILE)</span>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Global Inventory</h2>
+                    <span style="color:#8ACE00; font-family:monospace; font-size:0.7rem;">ALL PARCELS IN SYSTEM </span>
                 </div>
                 <div id="global-parcel-list" style="margin-top:1rem; height:450px; overflow-y:scroll; border:1px solid #333; background:#000; padding:5px;">
                     <div style="color:#333; text-align:center; margin-top:20px;">Scanning database...</div>
@@ -37,7 +37,7 @@
             <!-- Registration -->
             <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Onboard New Asset</h2>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Onboard New Parcel</h2>
                 </div>
                 <input type="text" id="shipId" placeholder="PARCEL_ID" style="width:100%; background:#111; border:1px solid #333; padding:0.8rem; color:#fff; margin-bottom:0.5rem;">
                 <input type="text" id="address" placeholder="DESTINATION" style="width:100%; background:#111; border:1px solid #333; padding:0.8rem; color:#fff; margin-bottom:0.5rem;">
@@ -50,8 +50,8 @@
                     <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Sorting Pipeline</h2>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:5px;">
-                    <button onclick="step1()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">1. TO QUEUE (FIFO)</button>
-                    <button onclick="step2()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">2. TO STACK (LIFO)</button>
+                    <button onclick="step1()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">1. PARCEL INTAKE</button>
+                    <button onclick="step2()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">2. PARCEL LOADING</button>
                     <button onclick="step3()" style="background:#111; color:#8ACE00; border:1px solid #333; padding:0.6rem; cursor:pointer;">3. DISPATCH</button>
                     <button onclick="processAll()" style="background:#FF69B4; color:#000; border:none; padding:0.8rem; cursor:pointer; font-weight:900; margin-top:5px;">AUTO-SORT ALL</button>
                 </div>
@@ -61,28 +61,28 @@
             <!-- Routing -->
             <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
                 <div class="panel-header">
-                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Metro Routing</h2>
+                    <h2 style="color:#FF69B4; text-transform:uppercase; margin-bottom:5px; font-size:1.2rem;">Routing</h2>
                 </div>
                 <button onclick="getShortestPath()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.6rem; margin-bottom:5px; cursor:pointer;">SHORTEST PATH</button>
-                <button onclick="getMST()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.6rem; cursor:pointer;">MST OPTIMIZATION</button>
+                <button onclick="getMST()" style="width:100%; background:transparent; color:#FF69B4; border:1px solid #FF69B4; padding:0.6rem; cursor:pointer;">OPTIMIZATION</button>
                 <div class="code-output" id="route-output" style="background:#000; color:#8ACE00; padding:0.5rem; border:1px solid #8ACE00; margin-top:1rem; font-family:monospace; font-size:0.6rem; white-space:pre-wrap;"></div>
             </section>
 
             <!-- Buffer List -->
             <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
-                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Intake Buffer (DLL)</h2>
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Intake Buffer</h2>
                 <div class="log-container" id="buffer-log" style="margin-top:0.5rem; max-height:150px; overflow-y:auto; background:#000;"></div>
             </section>
 
             <!-- Operations Ledger -->
             <section class="panel" style="background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
-                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Dispatch Ledger (SLL)</h2>
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Dispatch Ledger </h2>
                 <div class="audit-list" id="audit-log" style="margin-top:0.5rem; max-height:150px; overflow-y:auto; background:#000;"></div>
             </section>
 
             <!-- Directory -->
             <section class="panel full-width" style="grid-column: 1 / -1; background:#0a0a0a; border: 2px solid #333; padding:1.5rem;">
-                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Search Index (AVL)</h2>
+                <h2 style="color:#FF69B4; text-transform:uppercase; font-size:1.2rem;">Search Index</h2>
                 <div style="display:flex; gap:10px;">
                     <input type="text" id="search-query" placeholder="ZONE" style="flex:1; background:#111; border:1px solid #333; padding:0.8rem; color:#fff;">
                     <button onclick="searchAddress()" style="width:150px; background:#8ACE00; color:#000; border:none; font-weight:900; cursor:pointer;">SEARCH</button>
