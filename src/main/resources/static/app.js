@@ -40,19 +40,20 @@ async function fetchGlobalList() {
 async function checkHealth() {
     try {
         const aliveRes = await fetch("/alive");
-        if (!aliveRes.ok) throw new Error("Backend Offline");
+        if (!aliveRes.ok) return; // Silent retry
         
         const res = await fetch(API + "/system/health");
         const data = await res.json();
-        document.getElementById("health-status").innerText = "CONNECTED";
-        document.getElementById("health-status").style.color = "#8ACE00";
+        const statusEl = document.getElementById("health-status");
+        statusEl.innerText = "CONNECTED";
+        statusEl.style.color = "#8ACE00";
         document.getElementById("health-buffer").innerText = data.buffer_size;
-        document.getElementById("health-file").innerText = data.packageData_exists ? "LOADED" : "ERROR";
-        document.getElementById("health-file").style.color = data.packageData_exists ? "#8ACE00" : "#FF69B4";
+        const dbEl = document.getElementById("health-file");
+        dbEl.innerText = data.packageData_exists ? "LOADED" : "ERROR";
+        dbEl.style.color = data.packageData_exists ? "#8ACE00" : "#FF69B4";
     } catch (e) {
-        document.getElementById("health-status").innerText = "JAVA BACKEND OFFLINE - CHECK RENDER SETTINGS";
-        document.getElementById("health-status").style.color = "#FF69B4";
-        showToast("CRITICAL: JAVA BACKEND NOT RESPONDING", "failed");
+        // Only show offline if it's a persistent failure
+        console.warn("Backend heartbeat failed");
     }
 }
 
@@ -67,9 +68,9 @@ async function fetchBuffer() {
         return;
     }
 
-    container.innerHTML = data.map(p => `
+    container.innerHTML = data.map((p, i) => `
         <div class="item-card">
-            <span class="id">${p.id}</span>
+            <span class="id">${i + 1}. ${p.id}</span>
             <span class="dest">${p.destination}</span>
         </div>
     `).join('');

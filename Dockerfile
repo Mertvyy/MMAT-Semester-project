@@ -7,7 +7,7 @@ RUN mvn clean install -DskipTests
 # Run Stage
 FROM eclipse-temurin:17-jdk
 WORKDIR /app
-COPY --from=build /app/target/cargo-1.7.jar app.jar
+COPY --from=build /app/target/cargo-1.8.jar app.jar
 COPY packageData.txt packageData.txt
 COPY mapData.txt mapData.txt
 

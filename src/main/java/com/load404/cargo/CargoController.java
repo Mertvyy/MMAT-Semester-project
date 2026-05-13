@@ -131,8 +131,9 @@ public class CargoController {
 
     @GetMapping("/address/search")
     public String search(@RequestParam String key) {
-        String res = avl.search(key);
-        return (res == null) ? "No shipment found for " + key : "Last Shipment to " + key + ": " + res;
+        List<String> res = avl.search(key);
+        if (res == null || res.isEmpty()) return "No shipments found for zone: " + key;
+        return "Shipments for " + key + ": " + String.join(", ", res);
     }
 
     @GetMapping("/shipment/all")
