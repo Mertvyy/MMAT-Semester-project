@@ -89,7 +89,8 @@ public class AVLTree {
      * Public entry point: inserts a neighborhood-to-packageID mapping into the tree.
      * The key is normalised to lower-case for case-insensitive lookups.
      * Time Complexity: O(log N)
-     */`    6    public void insert(String k, String v) {
+     */    
+    public void insert(String k, String v) {
         root = insert(root, k.toLowerCase(), v);
     }
 
